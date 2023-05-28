@@ -7,10 +7,7 @@
             <h2>This is Project List</h2>
         </div>
 
-            <div class="col-md-6">
-                <a href="/posts/create" class="btn btn-primary btn-lg float-md-right" role="button" aria-pressed="true">Create New Project</a>
-            </div>
-
+        
     </div>
 
     <!-- DataTables Example -->

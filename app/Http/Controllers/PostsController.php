@@ -16,7 +16,7 @@ class PostsController extends Controller
 
 
             $posts = Post::orderBy('id', 'desc')->get();
-          return view('admin.posts.index', ['posts' => $posts]);
+           return view('admin.posts.index', ['posts' => $posts]);
     }
 else {
     $user_id= Auth::user()->id ;
@@ -36,17 +36,22 @@ else {
      * @return \Illuminate\Http\Response
      */
     public function create()
+
     {
+
+        if(Auth::user()->role != '1' ){
+            return view('nUser.posts.create');
+        }
+
         $users = User::all();
 
         return view('admin.posts.create',['users'=>$users]);
+
     }
 
 
     public function store(Request $request)
     {
-        //validate the field
-       
         $data = request()->validate([
             'title' => 'required|max:255',
 
@@ -62,6 +67,8 @@ else {
         $post->title = request('title');
 
         $post->userId = request('role');
+
+
 
         $post->save();
 
@@ -89,7 +96,7 @@ else {
      */
     public function edit(Post $post)
     {
-
+        $this->authorize('edit', $post);
 
         //get the post with the id $post->idate
         $post = Post::find($post->id);
@@ -98,16 +105,10 @@ else {
         return view('nUser/posts/edit', ['post' => $post]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, Post $post)
     {
-
+        $this->authorize('update', $post);
 
 
         //validate the field
@@ -142,6 +143,7 @@ else {
 
 
 
+        $this->authorize('delete', $post);
 
              $post->delete();
 

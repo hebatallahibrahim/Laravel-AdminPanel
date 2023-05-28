@@ -16,7 +16,7 @@ return new class extends Migration
         {
             Schema::create('users', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->integer('role')->default('0'); // for user role = 0 and for admin the role =1
+                $table->boolean('role')->default('0'); // for user role = 0 and for admin the role =1
                 $table->string('name');
                 $table->string('email')->unique();
                 $table->timestamp('email_verified_at')->nullable();
